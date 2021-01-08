@@ -10,6 +10,19 @@ node{
             sh "mvn sonar:sonar"
         }
     }
+    stage("Quality Gate Status Check"){
+        timeout(time: 1, unit: 'HOURS') {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+                // Email notification if quality gate failed
+                mail bcc: '', body: '''SonarQube Analysis Failed''',
+                cc: '', from: '', replyTo: '', subject: 'Jenkins Job : Sonarqube checks failed', to: 'iputusaputra.mitrais@gmail.com'
+
+                // mark this build as error and abort next pipeline stage
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+        }
+    }  
     stage('Email Notification'){
         mail bcc: '', body: '''Hi Welcome to jenkins email alerts
         Thanks
