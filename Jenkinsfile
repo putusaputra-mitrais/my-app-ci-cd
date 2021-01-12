@@ -22,6 +22,9 @@ node{
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
             }
         }
+    }
+    stage("Deploy jar file"){
+        sh 'copy ./target/gs-maven-0.1.0-shaded.jar D:/Putra/CDC/team-7/test-deploy-jenkins/'
     }  
     stage('Email Notification'){
         mail bcc: '', body: '''Hi Welcome to jenkins email alerts
