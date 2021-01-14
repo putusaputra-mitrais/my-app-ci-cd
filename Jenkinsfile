@@ -40,7 +40,6 @@ node{
         }
         stage("Deploy jar file"){
             sh 'cp target/gs-maven-0.1.0-shaded.jar D:/Putra/CDC/team-7/test-deploy-jenkins'
-            echo "${GIT_COMMITTER_EMAIL}"
         }  
         stage('Email Notification'){
             mail bcc: '', body: '''Hi Welcome to jenkins email alerts
